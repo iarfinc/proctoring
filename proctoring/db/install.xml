@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/quiz/accessrule/proctoring/db" VERSION="20260908" COMMENT="XMLDB file for Moodle quizaccess_proctoring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="quizaccess_proctoring" COMMENT="Tabel log proctoring kamera dan hasil AI">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID Kuis"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID User/Peserta"/>
+        <FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID Percobaan Kuis"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Waktu log dibuat"/>
+        <FIELD NAME="status" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="0 = Aman, 1 = Terdeteksi Pelanggaran"/>
+        <FIELD NAME="violation_type" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Tipe pelanggaran dari AI"/>
+        <FIELD NAME="confidence_score" TYPE="number" LENGTH="10" DECIMALS="5" NOTNULL="false" SEQUENCE="false" COMMENT="Skor keyakinan AI"/>
+        <FIELD NAME="imagefile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Nama file gambar bukti"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <!-- Index agar query pencarian data saat reporting lebih cepat -->
+        <INDEX NAME="quiz_user_attempt" UNIQUE="false" FIELDS="quizid, userid, attemptid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
